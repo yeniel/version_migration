@@ -1,6 +1,6 @@
 name: version_migration
 description: Manages functions of code that need to run once on version updates in Flutter apps.
-version: 0.0.2
+version: 1.0.0
 author: Yeniel Landestoy <y3ni3l@gmail.com>
 homepage: https://github.com/yeniel/version_migration.git
 
