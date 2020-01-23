@@ -227,10 +227,10 @@ packages:
   version_migration:
     dependency: "direct main"
     description:
-      path: "../.."
+      path: ".."
       relative: true
     source: path
-    version: "0.0.2"
+    version: "1.0.1"
   xml:
     dependency: transitive
     description:
