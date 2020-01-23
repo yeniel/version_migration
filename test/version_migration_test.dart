@@ -21,7 +21,7 @@ void main() {
     test('migration reset', () async {
       await whenRunsFirstMigration();
       await whenResetVersionMigration();
-      await whenMigrateAgain();
+      await whenRunsFirstMigration();
       expectMigrationIsDone();
     });
   });
@@ -64,7 +64,7 @@ void mockPackageInfo() {
       return <String, dynamic>{
         'appName': 'VersionMigration',
         'packageName': 'VersionMigration',
-        'version': '0.0.0',
+        'version': '1.0.0',
         'buildNumber': '0'
       };
     }
@@ -119,16 +119,6 @@ whenRunsTwoApplicationUpdatesCalls() async {
 whenResetVersionMigration() {
   VersionMigration.reset();
   reset();
-}
-
-whenMigrateAgain() async {
-  await VersionMigration.migrateToVersion("0.9.0", () {
-    migration090 = true;
-  });
-
-  await VersionMigration.migrateToVersion("1.0.0", () {
-    migration100 = true;
-  });
 }
 
 expectMigrationIsDone() {
