@@ -3,7 +3,7 @@
 VersionMigration
 ===========
 
-This a translation of the library MTMigration (iOS) to a Dart Package.
+This a translation of the library MTMigration (https://github.com/mysterioustrousers/MTMigration) to a Dart Package.
 
 Manages functions of code that need to run once on version updates in Flutter apps. This could be anything from data
 normalization routines, "What's New In This Version" screens, or bug fixes.
