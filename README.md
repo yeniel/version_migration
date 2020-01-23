@@ -3,6 +3,8 @@
 VersionMigration
 ===========
 
+[![Codemagic build status](https://api.codemagic.io/apps/5e29e24fcc644b0019cec109/5e29e24fcc644b0019cec108/status_badge.svg)](https://codemagic.io/apps/5e29e24fcc644b0019cec109/5e29e24fcc644b0019cec108/latest_build)
+
 This a translation of the library MTMigration (https://github.com/mysterioustrousers/MTMigration) to a Dart Package.
 
 Manages functions of code that need to run once on version updates in Flutter apps. This could be anything from data
