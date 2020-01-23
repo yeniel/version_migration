@@ -1,5 +1,3 @@
-# version_migration
-
 VersionMigration
 ===========
 
