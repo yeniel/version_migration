@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+/// Model to represent a version
 class Version implements Comparable<Version> {
   final String version;
 
+  /// The version is passed as string in the format Major.Minor.Micro (Eg. 1.0.0)
   Version({@required this.version}) {
     if (version == null) {
       throw FormatException();

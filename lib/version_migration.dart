@@ -8,6 +8,7 @@ class VersionMigration {
   static String _lastMigratedVersionKey = "Migrator.lastMigratedVersionKey";
   static String _lastUpdatedAppVersionKey = "Migrator.lastUpdatedAppVersionKey";
 
+  /// Migrate to version [version] executing the function [migrationFunction]
   static Future<void> migrateToVersion(String version, Function migrationFunction) async {
     Version newVersion = Version(version: version);
 
@@ -18,6 +19,7 @@ class VersionMigration {
     }
   }
 
+  /// If you need a block that runs every time your application version changes, executing the function [updatedFunction]
   static Future<void> applicationUpdate(Function updateFunction) async {
     Version lastUpdatedAppVersion = await _getLastUpdatedAppVersion();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -28,6 +30,7 @@ class VersionMigration {
     }
   }
 
+  /// Reset in shared preferences the last migrated version and last updated app version
   static reset() {
     _setLastMigratedVersion(null);
     _setLastUpdatedAppVersion(null);
