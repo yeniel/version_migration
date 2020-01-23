@@ -1,4 +1,4 @@
-## [0.0.2] - 2020-01-23
+## [1.0.0] - 2020-01-23
 
 * Bug fixing, tests were updated, an example was added.
 
