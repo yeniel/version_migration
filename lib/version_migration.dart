@@ -41,7 +41,7 @@ class VersionMigration {
   static Future<Version> getLastMigratedVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return Version(version: prefs.getString(lastMigratedVersionKey));
+    return Version(version: prefs.getString(lastMigratedVersionKey) ?? "0.0.0");
   }
 
   static Future<bool> setLastMigratedVersion(String value) async {
@@ -53,7 +53,7 @@ class VersionMigration {
   static Future<Version> getLastUpdatedAppVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return Version(version: prefs.getString(lastUpdatedAppVersionKey));
+    return Version(version: prefs.getString(lastUpdatedAppVersionKey) ?? "0.0.0");
   }
 
   static Future<bool> setLastUpdatedAppVersion(String value) async {
@@ -83,8 +83,8 @@ class Version implements Comparable<Version> {
     if (other == null) {
       return 1;
     } else {
-      List<String> versionParts = version.split(".");
-      List<String> otherParts = other.version.split(".");
+      List<int> versionParts = version.split(".").map((part) => int.parse(part)).toList();
+      List<int> otherParts = other.version.split(".").map((part) => int.parse(part)).toList();
 
       int numberOfParts = max(versionParts.length, otherParts.length);
 
