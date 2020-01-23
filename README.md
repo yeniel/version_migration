@@ -14,7 +14,7 @@ MTMigration can be installed one of two ways:
 
 Add in pubspec:
 
-version_migration: ^0.0.1
+``` version_migration: ^0.0.1
 
 ## Usage
 
