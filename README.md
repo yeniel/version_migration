@@ -32,7 +32,7 @@ VersionMigration.applicationUpdate(() {
 If the function is specific to a version, use `migrateToVersion` and VersionMigration will
 ensure that the function is only ever run once for that version.
 
-```objc
+```dart
 VesionMigration.migrateToVersion("1.1", () {
     newness.presentNewness();
 });
@@ -41,12 +41,12 @@ VesionMigration.migrateToVersion("1.1", () {
 Because VersionMigration inspects your actual version number and keeps track of the last migration,
 it will migrate all un-migrated functions inbetween. For example, let's say you had the following migrations:
 
-```objc
-VersionMigration migrateToVersion("0.9", () {
+```dart
+VersionMigration.migrateToVersion("0.9", () {
     // Some 0.9 stuff
 });
 
-VersionMigration migrateToVersion("1.0", () {
+VersionMigration.migrateToVersion("1.0", () {
     // Some 1.0 stuff
 });
 ```
@@ -56,7 +56,7 @@ If a user was at version `0.8`, skipped `0.9`, and upgraded to `1.0`, then both 
 For debugging/testing purposes, you can call `reset` to clear out the last migration VersionMigration remembered, causing all
 migrations to run from the beginning:
 
-```objc
+```dart
 VersionMigration.reset();
 ```
 
