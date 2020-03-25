@@ -9,14 +9,18 @@ class VersionMigration {
   static String _lastUpdatedAppVersionKey = "Migrator.lastUpdatedAppVersionKey";
 
   /// Migrate to version [version] executing the function [migrationFunction]
-  static Future<void> migrateToVersion(String version, Function migrationFunction) async {
+  static Future<bool> migrateToVersion(String version, Function migrationFunction) async {
+    bool migrated = false;
     Version newVersion = Version(version: version);
 
     if (await _newVersionIsGreaterThanLastMigratedVersion(newVersion) &&
         await _newVersionIsNotGreatherThanAppVersion(newVersion)) {
-      migrationFunction();
-      _setLastMigratedVersion(version.toString());
+      await migrationFunction();
+      await _setLastMigratedVersion(version.toString());
+      migrated = true;
     }
+
+    return migrated;
   }
 
   /// If you need a block that runs every time your application version changes, executing the function [updatedFunction]
