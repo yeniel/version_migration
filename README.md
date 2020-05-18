@@ -10,12 +10,10 @@ normalization routines, "What's New In This Version" screens, or bug fixes.
 
 ## Installation
 
-MTMigration can be installed one of two ways:
-
 Add in pubspec:
 
 ```
-version_migration: ^0.0.1
+version_migration: ^1.0.2
 ```
 
 ## Usage
