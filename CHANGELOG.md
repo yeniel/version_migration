@@ -1,7 +1,12 @@
+## 1.0.4 - 2020-12-16
+
+* Use https URLs in CHANGELOG.md
+
+
 ## 1.0.3 - 2020-05-18
 
 * Pull request of mgonzalezc. The method migrateToVersion returning migration result.
-* Pull request of amirh. Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](http://github.com/amirh/dart_lsc))
+* Pull request of amirh. Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](https://github.com/amirh/dart_lsc))
 
 ## 1.0.2 - 2020-01-23
 
