@@ -1,6 +1,6 @@
 name: version_migration
 description: Manages functions of code that need to run once on version updates in Flutter apps.
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/yeniel/version_migration.git
 
 environment:
@@ -10,8 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  package_info: '>=0.4.0+13 <2.0.0'
-  shared_preferences: ^0.5.6
+  package_info: ^0.4.3+2
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:
