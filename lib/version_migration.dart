@@ -9,7 +9,8 @@ class VersionMigration {
   static String _lastUpdatedAppVersionKey = "Migrator.lastUpdatedAppVersionKey";
 
   /// Migrate to version [version] executing the function [migrationFunction]
-  static Future<bool> migrateToVersion(String version, Function migrationFunction) async {
+  static Future<bool> migrateToVersion(
+      String version, Function migrationFunction) async {
     bool migrated = false;
     Version newVersion = Version(version: version);
 
@@ -43,7 +44,8 @@ class VersionMigration {
   static Future<Version> _getLastMigratedVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return Version(version: prefs.getString(_lastMigratedVersionKey) ?? "0.0.0");
+    return Version(
+        version: prefs.getString(_lastMigratedVersionKey) ?? "0.0.0");
   }
 
   static Future<bool> _setLastMigratedVersion(String value) async {
@@ -55,7 +57,8 @@ class VersionMigration {
   static Future<Version> _getLastUpdatedAppVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return Version(version: prefs.getString(_lastUpdatedAppVersionKey) ?? "0.0.0");
+    return Version(
+        version: prefs.getString(_lastUpdatedAppVersionKey) ?? "0.0.0");
   }
 
   static Future<bool> _setLastUpdatedAppVersion(String value) async {
@@ -64,13 +67,15 @@ class VersionMigration {
     return prefs.setString(_lastUpdatedAppVersionKey, value);
   }
 
-  static Future<bool> _newVersionIsGreaterThanLastMigratedVersion(Version newVersion) async {
+  static Future<bool> _newVersionIsGreaterThanLastMigratedVersion(
+      Version newVersion) async {
     Version lastMigratedVersion = await _getLastMigratedVersion();
 
     return newVersion.compareTo(lastMigratedVersion) == 1;
   }
 
-  static Future<bool> _newVersionIsNotGreatherThanAppVersion(Version newVersion) async {
+  static Future<bool> _newVersionIsNotGreatherThanAppVersion(
+      Version newVersion) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     Version appVersion = Version(version: packageInfo.version);
 

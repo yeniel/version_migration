@@ -24,8 +24,10 @@ class Version implements Comparable<Version> {
     if (other == null) {
       return 1;
     } else {
-      List<int> versionParts = version.split(".").map((part) => int.parse(part)).toList();
-      List<int> otherParts = other.version.split(".").map((part) => int.parse(part)).toList();
+      List<int> versionParts =
+          version.split(".").map((part) => int.parse(part)).toList();
+      List<int> otherParts =
+          other.version.split(".").map((part) => int.parse(part)).toList();
 
       int numberOfParts = max(versionParts.length, otherParts.length);
 
