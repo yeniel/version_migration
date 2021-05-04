@@ -1,3 +1,8 @@
+## 2.0.1 - 2021-05-05
+
+* Example was migrated to null-safety
+* Dart format
+
 ## 2.0.0 - 2021-05-05
 
 * Null-safety migration
