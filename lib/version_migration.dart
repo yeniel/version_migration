@@ -37,8 +37,8 @@ class VersionMigration {
 
   /// Reset in shared preferences the last migrated version and last updated app version
   static reset() {
-    _setLastMigratedVersion(null);
-    _setLastUpdatedAppVersion(null);
+    _setLastMigratedVersion('');
+    _setLastUpdatedAppVersion('');
   }
 
   static Future<Version> _getLastMigratedVersion() async {
