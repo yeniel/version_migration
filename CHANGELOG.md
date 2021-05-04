@@ -1,7 +1,11 @@
+## 2.0.0 - 2021-05-05
+
+* Null-safety migration
+* Tests
+
 ## 1.0.4 - 2020-12-16
 
 * Use https URLs in CHANGELOG.md
-
 
 ## 1.0.3 - 2020-05-18
 

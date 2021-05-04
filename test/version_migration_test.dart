@@ -6,137 +6,200 @@ import 'package:version_migration/version_migration.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
+  setUp(() async {
     SharedPreferences.setMockInitialValues({});
-    mockPackageInfo();
-    VersionMigration.reset();
-    reset();
   });
 
-  tearDown(() {
-
+  tearDown(() async {
+    await VersionMigration.reset();
+    resetMigrationExecutedFlags();
   });
 
-  group('migration reset', () {
-    test('migration reset', () async {
-      await whenRunsFirstMigration();
-      await whenResetVersionMigration();
-      await whenRunsFirstMigration();
-      expectMigrationIsDone();
+  group("GIVEN app with version $currentVersion", () {
+    group("WHEN reset migrations", () {
+      test('THEN if run current version migration again, should be executed', () async {
+        givenApp(version: currentVersion);
+
+        await whenResetMigrationsAndExecuteMigrationAgain();
+
+        thenExpectMigrationIsExecuted();
+      });
+    });
+
+    group('WHEN migrate to version $currentVersion', () {
+      test('THEN migration is executed', () async {
+        givenApp(version: currentVersion);
+
+        await whenExecuteMigration(currentVersion);
+
+        thenExpectMigrationIsExecuted();
+      });
+    });
+
+    group("WHEN execute same migration $currentVersion twice", () {
+      test("THEN migration is executed once", () async {
+        givenApp(version: currentVersion);
+
+        await whenExecuteSameMigrationTwice(currentVersion);
+
+        thenExpectMigrationIsNotExecuted();
+      });
+    });
+
+    group("WHEN execute migrations in wrong order", () {
+      test("THEN only ordered migrations are executed", () async {
+        givenApp(version: currentVersion);
+
+        await whenExecuteMigrationsInWrongOrder();
+
+        thenExpectOnlyOrderedMigrationsAreExecuted();
+      });
+    });
+
+    group("WHEN execute migration for any version", () {
+      test("THEN the migration is executed", () async {
+        givenApp(version: currentVersion);
+
+        await whenExecuteMigrationForAnyVersion();
+
+        thenExpectMigrationForAnyVersionIsExecuted();
+      });
+    });
+
+    group("WHEN execute migration for any version twice", () {
+      test("THEN the migration is executed once", () async {
+        givenApp(version: currentVersion);
+
+        await whenExecuteMigrationForAnyVersionTwice();
+
+        thenExpectMigrationForAnyVersionIsNotExecuted();
+      });
     });
   });
-
-  group('migrateToVersion method', () {
-    test('migrate on first run', () async {
-      await whenRunsFirstMigration();
-      expectMigrationIsDone();
-    });
-
-    test('migrates once', () async {
-      await whenRunsTwoMigrationOfSameVersion();
-      expectMigrationIsNotDone();
-    });
-
-    test('migrates in natural sort order', () async {
-      await whenRunsMigrationsInWrongOrder();
-      expectOnlyOrderedMigrationsAreDone();
-    });
-  });
-
-  group('applicationUpdate method', () {
-    test('runs application update once', () async {
-      whenRunsTwoApplicationUpdatesCalls();
-      expectOnlyRunsFirstApplicationUpdate();
-    });
-  });
-
 }
 
-bool migration090 = false;
-bool migration100 = false;
-bool migration0100 = false;
-bool migration010 = false;
+String firstVersion = "0.5.0";
+String previousVersion = "1.0.0";
+String currentVersion = "2.0.0";
+bool previousMigrationExecuted = false;
+bool currentVersionMigrationExecuted = false;
+bool firstMigrationExecuted = false;
 bool applicationUpdate = false;
 
-void mockPackageInfo() {
+// GIVEN
+
+void givenApp({String version = "2.0.0", String build = "0"}) {
   const MethodChannel('plugins.flutter.io/package_info').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'getAll') {
       return <String, dynamic>{
         'appName': 'VersionMigration',
         'packageName': 'VersionMigration',
-        'version': '1.0.0',
-        'buildNumber': '0'
+        'version': version,
+        'buildNumber': build
       };
     }
     return null;
   });
 }
 
-reset() {
-  migration090 = false;
-  migration100 = false;
-  migration0100 = false;
-  migration010 = false;
-  applicationUpdate = false;
+// WHEN
+
+Future<void> whenResetMigrationsAndExecuteMigrationAgain() async {
+  await whenExecuteMigration(currentVersion);
+  await whenResetVersionMigration();
+  await whenExecuteMigration(currentVersion);
 }
 
-whenRunsFirstMigration() async {
-  await VersionMigration.migrateToVersion("0.9.0", () {
-    migration090 = true;
-  });
-  await VersionMigration.migrateToVersion("1.0.0", () {
-    migration100 = true;
+Future<void> whenExecuteMigration(String version) async {
+  await VersionMigration.migrateToVersion(version, () {
+    setVersionMigrationFlag(version);
   });
 }
 
-whenRunsTwoMigrationOfSameVersion() async {
-  await whenRunsFirstMigration();
-  reset();
-  await whenRunsFirstMigration();
+Future<void> whenExecuteSameMigrationTwice(String version) async {
+  await whenExecuteMigration(version);
+  resetMigrationExecutedFlags();
+  await whenExecuteMigration(version);
 }
 
-whenRunsMigrationsInWrongOrder() async {
-  await VersionMigration.migrateToVersion("0.9.0", () {
-    migration090 = true;
+Future<void> whenExecuteMigrationsInWrongOrder() async {
+  await VersionMigration.migrateToVersion(previousVersion, () {
+    setVersionMigrationFlag(previousVersion);
   });
 
-  await VersionMigration.migrateToVersion("0.1.0", () {
-    migration010 = true;
+  await VersionMigration.migrateToVersion(firstVersion, () {
+    setVersionMigrationFlag(firstVersion);
   });
 
-  await VersionMigration.migrateToVersion("0.10.0", () {
-    migration0100 = true;
+  await VersionMigration.migrateToVersion(currentVersion, () {
+    setVersionMigrationFlag(currentVersion);
   });
 }
 
-whenRunsTwoApplicationUpdatesCalls() async {
-  await VersionMigration.applicationUpdate(() {});
+Future<void> whenExecuteMigrationForAnyVersion() async {
   await VersionMigration.applicationUpdate(() {
     applicationUpdate = true;
   });
 }
 
-whenResetVersionMigration() {
-  VersionMigration.reset();
-  reset();
+Future<void> whenExecuteMigrationForAnyVersionTwice() async {
+  await VersionMigration.applicationUpdate(() {
+    applicationUpdate = true;
+  });
+
+  applicationUpdate = false;
+
+  await VersionMigration.applicationUpdate(() {
+    applicationUpdate = true;
+  });
 }
 
-expectMigrationIsDone() {
-  expect(migration090, true);
-  expect(migration100, true);
+Future<void> whenResetVersionMigration() async {
+  await VersionMigration.reset();
+  resetMigrationExecutedFlags();
 }
 
-expectMigrationIsNotDone() {
-  expect(migration090, false);
-  expect(migration100, false);
+void resetMigrationExecutedFlags() {
+  previousMigrationExecuted = false;
+  currentVersionMigrationExecuted = false;
+  firstMigrationExecuted = false;
+  applicationUpdate = false;
 }
 
-expectOnlyOrderedMigrationsAreDone() {
-  expect(migration090, true);
-  expect(migration010, false);
-  expect(migration0100, true);
+void setVersionMigrationFlag(String version) {
+  if (version == firstVersion) {
+    firstMigrationExecuted = true;
+  }
+
+  if (version == previousVersion) {
+    previousMigrationExecuted = true;
+  }
+
+  if (version == currentVersion) {
+    currentVersionMigrationExecuted = true;
+  }
 }
 
-expectOnlyRunsFirstApplicationUpdate() {
-  expect(applicationUpdate, false);
+//THEN
+
+thenExpectMigrationIsExecuted() {
+  expect(currentVersionMigrationExecuted, isTrue);
+}
+
+void thenExpectMigrationIsNotExecuted() {
+  expect(currentVersionMigrationExecuted, isFalse);
+}
+
+void thenExpectOnlyOrderedMigrationsAreExecuted() {
+  expect(previousMigrationExecuted, isTrue);
+  expect(firstMigrationExecuted, isFalse);
+  expect(currentVersionMigrationExecuted, isTrue);
+}
+
+void thenExpectMigrationForAnyVersionIsExecuted() {
+  expect(applicationUpdate, isTrue);
+}
+
+void thenExpectMigrationForAnyVersionIsNotExecuted() {
+  expect(applicationUpdate, isFalse);
 }
