@@ -17,7 +17,8 @@ void main() {
 
   group("GIVEN app with version $currentVersion", () {
     group("WHEN reset migrations", () {
-      test('THEN if run current version migration again, should be executed', () async {
+      test('THEN if run current version migration again, should be executed',
+          () async {
         givenApp(version: currentVersion);
 
         await whenResetMigrationsAndExecuteMigrationAgain();
@@ -89,7 +90,8 @@ bool applicationUpdate = false;
 // GIVEN
 
 void givenApp({String version = "2.0.0", String build = "0"}) {
-  const MethodChannel('plugins.flutter.io/package_info').setMockMethodCallHandler((MethodCall methodCall) async {
+  const MethodChannel('plugins.flutter.io/package_info')
+      .setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'getAll') {
       return <String, dynamic>{
         'appName': 'VersionMigration',

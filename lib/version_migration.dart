@@ -10,7 +10,8 @@ class VersionMigration {
   static String _lastUpdatedAppVersionKey = "Migrator.lastUpdatedAppVersionKey";
 
   /// Migrate to version [version] executing the function [migrationFunction]
-  static Future<bool> migrateToVersion(String version, Function migrationFunction) async {
+  static Future<bool> migrateToVersion(
+      String version, Function migrationFunction) async {
     bool migrated = false;
     Version newVersion = Version(version: version);
 
@@ -43,7 +44,8 @@ class VersionMigration {
 
   static Future<Version> _getLastMigratedVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String lastMigratedVersion = prefs.getString(_lastMigratedVersionKey) ?? firstDefaultVersion;
+    String lastMigratedVersion =
+        prefs.getString(_lastMigratedVersionKey) ?? firstDefaultVersion;
 
     return Version(version: lastMigratedVersion);
   }
@@ -56,7 +58,8 @@ class VersionMigration {
 
   static Future<Version> _getLastUpdatedAppVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String lastUpdatedAppVersion = prefs.getString(_lastUpdatedAppVersionKey) ?? firstDefaultVersion;
+    String lastUpdatedAppVersion =
+        prefs.getString(_lastUpdatedAppVersionKey) ?? firstDefaultVersion;
 
     return Version(version: lastUpdatedAppVersion);
   }
@@ -67,13 +70,15 @@ class VersionMigration {
     await prefs.setString(_lastUpdatedAppVersionKey, value);
   }
 
-  static Future<bool> _newVersionIsGreaterThanLastMigratedVersion(Version newVersion) async {
+  static Future<bool> _newVersionIsGreaterThanLastMigratedVersion(
+      Version newVersion) async {
     Version lastMigratedVersion = await _getLastMigratedVersion();
 
     return newVersion.compareTo(lastMigratedVersion) == 1;
   }
 
-  static Future<bool> _newVersionIsNotGreaterThanAppVersion(Version newVersion) async {
+  static Future<bool> _newVersionIsNotGreaterThanAppVersion(
+      Version newVersion) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     Version appVersion = Version(version: packageInfo.version);
 

@@ -15,8 +15,10 @@ class Version implements Comparable<Version> {
 
   @override
   int compareTo(Version other) {
-    List<int> versionParts = version.split(".").map((part) => int.parse(part)).toList();
-    List<int> otherParts = other.version.split(".").map((part) => int.parse(part)).toList();
+    List<int> versionParts =
+        version.split(".").map((part) => int.parse(part)).toList();
+    List<int> otherParts =
+        other.version.split(".").map((part) => int.parse(part)).toList();
 
     int numberOfParts = max(versionParts.length, otherParts.length);
 
