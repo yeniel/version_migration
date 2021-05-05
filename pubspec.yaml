@@ -1,6 +1,6 @@
 name: version_migration
 description: Manages functions of code that need to run once on version updates in Flutter apps.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/yeniel/version_migration.git
 
 environment:
@@ -22,6 +22,16 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  plugin:
+    platforms:
+      linux:
+        default_package: version_migration
+      macos:
+        default_package: version_migration
+      web:
+        default_package: version_migration
+      windows:
+        default_package: version_migration
 
   # To add assets to your package, add an assets section, like this:
   # assets:

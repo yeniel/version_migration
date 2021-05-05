@@ -269,10 +269,10 @@ packages:
   version_migration:
     dependency: "direct main"
     description:
-      name: version_migration
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
+      path: ".."
+      relative: true
+    source: path
+    version: "2.0.1"
   win32:
     dependency: transitive
     description:
