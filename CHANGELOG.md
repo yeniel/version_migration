@@ -1,3 +1,7 @@
+## 2.0.4
+
+* Migrated from the deprecated package_info plugin to package_info_plus.
+
 ## 2.0.3 - 2021-05-05
 
 * Platforms support
