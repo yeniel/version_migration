@@ -1,12 +1,14 @@
+## 2.0.4 - 2021-11-26
+
+* Update packages
+
 ## 2.0.3 - 2021-05-05
 
 * Platforms support
 
-
 ## 2.0.2 - 2021-05-05
 
 * Platforms support
-
 
 ## 2.0.1 - 2021-05-05
 
