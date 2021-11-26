@@ -17,7 +17,8 @@ void main() {
 
   group("GIVEN app with version $currentVersion", () {
     group("WHEN reset migrations", () {
-      test('THEN if run current version migration again, should be executed', () async {
+      test('THEN if run current version migration again, should be executed',
+          () async {
         givenApp(version: currentVersion);
 
         await whenResetMigrationsAndExecuteMigrationAgain();
