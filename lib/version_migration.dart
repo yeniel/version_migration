@@ -2,7 +2,7 @@ library version_migration;
 
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:version_migration/version.dart';
+import 'version.dart';
 
 class VersionMigration {
   static String firstDefaultVersion = "0.0.0";
