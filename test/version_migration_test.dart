@@ -1,5 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version_migration/version_migration.dart';
 
@@ -17,8 +17,7 @@ void main() {
 
   group("GIVEN app with version $currentVersion", () {
     group("WHEN reset migrations", () {
-      test('THEN if run current version migration again, should be executed',
-          () async {
+      test('THEN if run current version migration again, should be executed', () async {
         givenApp(version: currentVersion);
 
         await whenResetMigrationsAndExecuteMigrationAgain();
@@ -90,18 +89,13 @@ bool applicationUpdate = false;
 // GIVEN
 
 void givenApp({String version = "2.0.0", String build = "0"}) {
-  const MethodChannel('plugins.flutter.io/package_info')
-      .setMockMethodCallHandler((MethodCall methodCall) async {
-    if (methodCall.method == 'getAll') {
-      return <String, dynamic>{
-        'appName': 'VersionMigration',
-        'packageName': 'VersionMigration',
-        'version': version,
-        'buildNumber': build
-      };
-    }
-    return null;
-  });
+  PackageInfo.setMockInitialValues(
+    appName: 'VersionMigration',
+    packageName: 'VersionMigration',
+    version: version,
+    buildNumber: build,
+    buildSignature: "",
+  );
 }
 
 // WHEN
