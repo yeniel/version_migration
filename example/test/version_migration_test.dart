@@ -96,6 +96,7 @@ void givenApp({String version = "2.0.0", String build = "0"}) {
     version: version,
     buildNumber: build,
     buildSignature: "",
+    installerStore: "AppStore",
   );
 }
 

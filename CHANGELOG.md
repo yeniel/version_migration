@@ -1,3 +1,7 @@
+## 2.0.6 - 2023-01-13
+
+* Update packages
+
 ## 2.0.5 - 2022-10-06
 
 * Update packages
