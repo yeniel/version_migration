@@ -1,6 +1,6 @@
 name: example
 description: Example of version migration
-version: 2.0.4
+version: 2.0.7
 homepage: https://github.com/yeniel/version_migration.git
 publish_to: 'none'
 
