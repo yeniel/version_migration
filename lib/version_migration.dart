@@ -31,7 +31,7 @@ class VersionMigration {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     if (lastUpdatedAppVersion.toString() != packageInfo.version) {
-      updateFunction();
+      await updateFunction();
       await _setLastUpdatedAppVersion(packageInfo.version);
     }
   }

@@ -13,7 +13,7 @@ normalization routines, "What's New In This Version" screens, or bug fixes.
 Add in pubspec:
 
 ```
-version_migration: ^2.0.7
+version_migration: ^2.0.8
 ```
 
 ## Usage
